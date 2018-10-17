@@ -1,0 +1,11 @@
+{ "name": "PDataWarehouse",  
+  "version": "0.2.0", 
+"description": "PDataWarehouse",
+ "main": "index.js", 
+"scripts": {  "start": "node index.js" },  
+  "dependencies":
+ {  "express": "latest"  , "express-session": "latest","body-parser":"latest"  ,"cookie-parser":"latest",
+ "mongodb":"latest",
+ "pug":"latest"
+ },"author": "Anurag Sharma"}
+ 
