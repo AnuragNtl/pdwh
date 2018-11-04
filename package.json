@@ -1,11 +1,22 @@
-{ "name": "PDataWarehouse",  
-  "version": "0.2.0", 
-"description": "PDataWarehouse",
- "main": "index.js", 
-"scripts": {  "start": "node index.js" },  
-  "dependencies":
- {  "express": "latest"  , "express-session": "latest","body-parser":"latest"  ,"cookie-parser":"latest",
- "mongodb":"latest",
- "pug":"latest"
- },"author": "Anurag Sharma"}
- 
+{
+  "name": "PDataWarehouse",
+  "version": "0.2.0",
+  "description": "PDataWarehouse",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@angular/cli": "^7.0.2",
+    "body-parser": "latest",
+    "cookie-parser": "latest",
+    "express": "latest",
+    "express-graphql": "^0.6.12",
+    "express-session": "latest",
+    "graphiql": "^0.12.0",
+    "graphql": "^14.0.2",
+    "mongodb": "latest",
+    "pug": "latest"
+  },
+  "author": "Anurag Sharma"
+}

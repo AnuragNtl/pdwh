@@ -1,0 +1,4 @@
+	<span *ngFor="let i of path;let p=index"><button (click)="navigateTo($event)" id="curPath{{p}}">{{i}}</button> > </span>
+	<div>
+		<span *ngFor="let i of accessibleNodes;let p=index"><button (click)="navigateToAccessible($event)" id="curAccPath{{p}}" >{{i}}</button><br></span>
+	</div>
