@@ -14,7 +14,7 @@ getSub: async (path)=>
 {
 let r=await getSubs(path.path);
 return r;
-}
+},
 addValue:(cat,val)=>
 {
 	access.verifyPath()
