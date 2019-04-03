@@ -4,9 +4,13 @@ var db;
 var app=express();
 var graphqlHTTP=require("express-graphql");
 var schema=buildSchema(`
+  type Mutation
+  {
+addValue(catName:String,catPath:[String]):String
+  }
 type Query
 {
-	getSub(path:[String]!):[String]
+  getSub(path:[String]!):[String]
 }
 `);
 var root={
@@ -15,15 +19,44 @@ getSub: async (path)=>
 let r=await getSubs(path.path);
 return r;
 },
-addValue:(cat,val)=>
+addValue:async (catName,catPath)=>
 {
-	access.verifyPath()
+  return await addVal(catName,catPath);
 }
 };
-async function addValue(val,cat)
+async function verifyPath(catPath)
 {
-	
+let p=new Promise((resolve,reject)=>
+    {
+    access.verifyPath(catPath,(err,ver)=>
+    {
+      if(err || !ver)
+        resolve(false);
+      else
+      resolve(ver);
+  });
+    });
+let ver=await p;
+    return ver;
 }
+async function addVal(val,cat,catPath)
+{
+	let ver=await verifyPath(catPath);
+  if(ver)
+   return await new Promise((resolve,reject)=>
+     {
+      db.collection("dw").insert({category:cat,baseCategory:catPath},function(err,res)
+        {
+        if(err)
+          reject(err);
+          else
+            resolve(true);
+        });
+
+     }
+   );
+  
+ }
 async function getSubs(path)
 {
 	 var p=new Promise(function(resolve,reject)
