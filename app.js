@@ -19,8 +19,9 @@ getSub: async (path)=>
 let r=await getSubs(path.path);
 return r;
 },
-addValue:async (catName,catPath)=>
+addValue:async ({catName,catPath})=>
 {
+  console.log("_______");
   return await addVal(catName,catPath);
 }
 };
@@ -30,8 +31,11 @@ let p=new Promise((resolve,reject)=>
     {
     access.verifyPath(catPath,(err,ver)=>
     {
-      if(err || !ver)
+      if(err)
+      {
+        console.log(err);
         resolve(false);
+        }
       else
       resolve(ver);
   });
@@ -39,7 +43,7 @@ let p=new Promise((resolve,reject)=>
 let ver=await p;
     return ver;
 }
-async function addVal(val,cat,catPath)
+async function addVal(cat,catPath)
 {
 	let ver=await verifyPath(catPath);
   if(ver)
@@ -53,8 +57,9 @@ async function addVal(val,cat,catPath)
             resolve(true);
         });
 
-     }
-   );
+     });
+  else
+    return false;
   
  }
 async function getSubs(path)
