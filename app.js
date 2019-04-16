@@ -4,15 +4,38 @@ var db;
 var app=express();
 var graphqlHTTP=require("express-graphql");
 var schema=buildSchema(`
+type Branch
+{
+    leafName:String,
+    ancestorPath:[String]
+}
   type Mutation
   {
 addValue(catName:String,catPath:[String]):String
   }
 type Query
 {
-  getSub(path:[String]!):[String]
+  getSub(path:[String]!):[String],
+  #find(name:String):[Branch]
 }
 `);
+class Branch
+{
+    constructor(name,path)
+    {
+        this.name=name;
+        this.path=path;
+    }
+    leafName()
+    {
+        return this.leafName;
+    }
+    ancestorPath()
+    {
+        return this.path;
+    }
+}
+
 var root={
 getSub: async (path)=>
 {
@@ -62,6 +85,24 @@ async function addVal(cat,catPath)
     return false;
   
  }
+async function find(name,path)
+{
+    return await new Promise((resolve,reject)=>
+    {
+        db.collection("dw").find({baseCategory:name}).toArray(function(err,res)
+        {
+            if(err)
+            reject(err);
+            else
+            {
+                let branchList=[];
+            for(let i in res)
+            branchList.push(new Branch(res[i].category,res[i].baseCategory));
+            resolve(branchList)
+            }
+        });
+    });
+}
 async function getSubs(path)
 {
 	 var p=new Promise(function(resolve,reject)
