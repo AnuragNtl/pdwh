@@ -16,7 +16,7 @@ addValue(catName:String,catPath:[String]):String
 type Query
 {
   getSub(path:[String]!):[String],
-  #find(name:String):[Branch]
+  find(name:String):[Branch]
 }
 `);
 class Branch
@@ -46,6 +46,10 @@ addValue:async ({catName,catPath})=>
 {
   console.log("_______");
   return await addVal(catName,catPath);
+},
+find: async ({name})=>
+{
+    return await find(name,[]);
 }
 };
 async function verifyPath(catPath)
@@ -89,7 +93,7 @@ async function find(name,path)
 {
     return await new Promise((resolve,reject)=>
     {
-        db.collection("dw").find({baseCategory:name}).toArray(function(err,res)
+        db.collection("dw").find({category:name}).toArray(function(err,res)
         {
             if(err)
             reject(err);
@@ -98,7 +102,7 @@ async function find(name,path)
                 let branchList=[];
             for(let i in res)
             branchList.push(new Branch(res[i].category,res[i].baseCategory));
-            resolve(branchList)
+            resolve(branchList);
             }
         });
     });
